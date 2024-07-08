@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: log-output-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: log-output
+  template:
+    metadata:
+      labels:
+        app: log-output
+    spec:
+      volumes:
+        - name: shared-image
+          emptyDir: {}
+      containers:
+        - name: log-read
+          image: sannahan/log-read:e1.10
+          env:
+          - name: PORT
+            value: "3000"
+          volumeMounts:
+          - name: shared-image
+            mountPath: /usr/src/app/files
+        - name: log-generate
+          image: sannahan/log-generate:e1.10
+          volumeMounts:
+          - name: shared-image
+            mountPath: /usr/src/app/files

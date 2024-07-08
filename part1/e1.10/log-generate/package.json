@@ -1,0 +1,11 @@
+{
+  "name": "e1.10",
+  "version": "1.0.0",
+  "description": "Random string generator",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC"
+}

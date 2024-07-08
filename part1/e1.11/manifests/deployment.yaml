@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shared-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shared
+  template:
+    metadata:
+      labels:
+        app: shared
+    spec:
+      volumes:
+        - name: shared-text
+          persistentVolumeClaim:
+            claimName: text-claim
+      containers:
+        - name: pingpong
+          image: sannahan/pingpong:e1.11
+          volumeMounts:
+            - name: shared-text
+              mountPath: /usr/src/app/files
+        - name: log-output
+          image: sannahan/log-output:e1.11-fixed
+          volumeMounts:
+            - name: shared-text
+              mountPath: /usr/src/app/files

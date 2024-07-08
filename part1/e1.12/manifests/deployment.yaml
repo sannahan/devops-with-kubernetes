@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: project-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: project
+  template:
+    metadata:
+      labels:
+        app: project
+    spec:
+      volumes:
+        - name: image-volume
+          persistentVolumeClaim:
+            claimName: image-claim
+      containers:
+        - name: project
+          image: sannahan/project:e1.12-fixedfixed
+          env:
+          - name: PORT
+            value: "8082"
+          volumeMounts:
+          - name: image-volume
+            mountPath: /usr/src/app/files
