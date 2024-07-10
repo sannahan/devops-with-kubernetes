@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shared-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shared
+  template:
+    metadata:
+      labels:
+        app: shared
+    spec:
+      containers:
+        - name: pingpong
+          image: sannahan/pingpong:e2.01
+        - name: log-output
+          image: sannahan/log-output:e2.01.2
