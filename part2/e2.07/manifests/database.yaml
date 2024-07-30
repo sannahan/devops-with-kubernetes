@@ -1,0 +1,70 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: log-output
+  name: postgres-svc
+  labels:
+    app: postgres
+spec:
+  ports:
+    - port: 5432
+      name: web
+  clusterIP: None
+  selector:
+    app: postgres
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: log-output
+  name: postgres-config
+  labels:
+    app: postgres
+data:
+  POSTGRES_DB: pingpong
+  POSTGRES_USER: admin
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  namespace: log-output
+  name: postgres-ss
+spec:
+  serviceName: postgres
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:13.0
+          ports:
+            - name: postgres
+              containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: postgres-config
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-password
+                  key: POSTGRES_PASSWORD
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates:
+    - metadata:
+        namespace: log-output
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: local-path
+        resources:
+          requests:
+            storage: 100Mi
