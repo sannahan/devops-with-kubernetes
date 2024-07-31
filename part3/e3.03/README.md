@@ -11,7 +11,7 @@ http://localhost:8084/todos
 
 ## Deploy to Kubernetes
 
-Github Actions or 
+Github Actions (change code in e3.03 or workflow and push to main) or 
 
 ```
 kubectl apply -k .
