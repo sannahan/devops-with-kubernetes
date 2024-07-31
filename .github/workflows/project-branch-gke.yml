@@ -65,9 +65,10 @@ jobs:
           NAMESPACE=${GITHUB_REF#refs/heads/}
           if [ "$NAMESPACE" = "main" ]; then
             NAMESPACE=default
+          else
+            kubectl create namespace $NAMESPACE
           fi
           cd ./part3/e3.04/
-          kubectl create namespace $NAMESPACE
           kubectl config set-context --current --namespace=$NAMESPACE
           kustomize edit set namespace $NAMESPACE
           kustomize edit set image APP-PROJECT/IMAGE=gcr.io/$PROJECT_ID/$APP_IMAGE:$BRANCH-$GITHUB_SHA
