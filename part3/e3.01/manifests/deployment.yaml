@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: pingpong
+  name: shared-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shared
+  template:
+    metadata:
+      labels:
+        app: shared
+    spec:
+      volumes:
+        - name: config-volume
+          configMap:
+            name: example-configmap
+      containers:
+        - name: pingpong
+          image: sannahan/pingpong:e2.07.10
+          env:
+          - name: PGHOST
+            value: postgres-svc
+          - name: PGDATABASE
+            value: pingpong
+          - name: PGUSER
+            value: admin
+          - name: PGPASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres-password
+                key: POSTGRES_PASSWORD

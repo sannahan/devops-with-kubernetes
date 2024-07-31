@@ -1,0 +1,14 @@
+services:
+  pingpong:
+    build: ./pingpong
+    ports:
+      - "3001:3001"
+  postgres:
+    container_name: "postgres"
+    image: "postgres:13.0"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: pingpong
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: mydockerpassword
