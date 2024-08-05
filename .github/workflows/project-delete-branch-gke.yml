@@ -38,8 +38,7 @@ jobs:
       - name: Delete
         run: |-
           NAMESPACE=${GITHUB_REF#refs/heads/}
-          if [ "$NAMESPACE" = "main" ]; then
-          else
+          if [ "$NAMESPACE" != "main" ]; then
             kubectl delete all --all -n $NAMESPACE
             kubectl delete namespace $NAMESPACE
           fi
