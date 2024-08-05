@@ -1,0 +1,45 @@
+name: Delete environment
+
+on:
+  delete
+
+env:
+  PROJECT_ID: ${{ secrets.GKE_PROJECT }}
+  GKE_CLUSTER: dwk-cluster
+  GKE_ZONE: europe-north1-a
+  APP_IMAGE: todo-app
+  BACKEND_IMAGE: todo-backend
+  SERVICE: project-dep
+  BRANCH: ${{ github.ref_name }}
+
+jobs:
+  build-publish-deploy:
+    name: Delete resources and namespace
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.GKE_SA_KEY }}'
+
+      - name: 'Set up Cloud SDK'
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: 'Use gcloud CLI'
+        run: gcloud info
+
+      - name: 'Get GKE credentials'
+        uses: 'google-github-actions/get-gke-credentials@v2'
+        with:
+          cluster_name: '${{ env.GKE_CLUSTER }}'
+          project_id: '${{ env.PROJECT_ID }}'
+          location: '${{ env.GKE_ZONE }}'
+
+      - name: Delete
+        run: |-
+          NAMESPACE=${GITHUB_REF#refs/heads/}
+          if [ "$NAMESPACE" = "main" ]; then
+          else
+            kubectl delete all --all -n $NAMESPACE
+            kubectl delete namespace $NAMESPACE
+          fi
