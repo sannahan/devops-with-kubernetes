@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: log-output
+  name: shared-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shared
+  template:
+    metadata:
+      labels:
+        app: shared
+    spec:
+      volumes:
+        - name: config-volume
+          configMap:
+            name: example-configmap
+      containers:
+        - name: pingpong
+          image: sannahan/pingpong:e3.02
+          env:
+          - name: PGHOST
+            value: postgres-svc
+          - name: PGDATABASE
+            value: pingpong
+          - name: PGUSER
+            value: admin
+          - name: PGPASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres-password
+                key: POSTGRES_PASSWORD
+          resources:
+            limits:
+              cpu: "50m"
+              memory: "100Mi"
+        - name: log-output
+          image: sannahan/log-output:e2.06.1
+          volumeMounts:
+          - name: config-volume
+            mountPath: /etc/config
+          resources:
+            limits:
+              cpu: "50m"
+              memory: "100Mi"
