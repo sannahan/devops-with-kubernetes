@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: dotfile-secret
+data:
+    .secret-file: ENC[AES256_GCM,data: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,iv:uXHxOR6mbNvXreiVhrf9ih7rl27dWcu6UbVhnjRW7Yw=,tag:qAOOJh0OiQoN8M4cFk3u7w==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age13w2jxmsuwhq5ppnn4fef48jsqvd00nvlgy30xv60x2nnsl6pk3rsdmcfwj
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSByNXV4L2dGaW1OTXBmTzBN
+            MHNMOG1ZQkx1eFo2cTcyT0NKZDJTVkUzTlIwCitoYmRwZUVLR0tsOC9tV2xTRXdU
+            UHBQbGYxQkpwRXAxVHlJZTZpQXpvbGcKLS0tIGpjQU9ybitWMEozeWpkZWp5YWh2
+            NUxOZXNRaGd4MnpUUzNtbnBPK2RPNmsKbyXdG/X3BdNWrK1K4mmiDlMEZdn1t3K9
+            vhWHWRUYNvgMNy09Jq/J6EB+ulLkB5tiaZwuE+ywsJvJEpV5Y/d4XA==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2024-08-06T11:50:08Z"
+    mac: ENC[AES256_GCM,data:j3ebViNj/mcGRyDP66Ir8R5B5Dd0gPmr/mDHYvm9P+qlaba2en4hlnwX/4sSinPyKRk3yw4cu2lgCbDzMkUPFVIjE5jQLnkAjyMEX38k2HSlU6OAqL/2JnHarlaFpN5uck54SSCkuXHScGHlkNMk0K31qUQDf9/748D9GnZ6ZKs=,iv:+rjRqHZr/cfWnwpuMJrw54tqfBV2pf316claV8d0I4Y=,tag:FWsRRpH0i+YCrWyGvGkglw==,type:str]
+    pgp: []
+    encrypted_regex: ^(data)$
+    version: 3.9.0
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+    name: todos-backup
+spec:
+    schedule: 0 0 * * *
+    jobTemplate:
+        spec:
+            template:
+                spec:
+                    volumes:
+                        - name: secret-volume
+                          secret:
+                            secretName: dotfile-secret
+                    containers:
+                        - name: todo-backup
+                          image: sannahan/todo-backup:e3.07.01
+                          env:
+                            - name: PASSWORD
+                              valueFrom:
+                                secretKeyRef:
+                                    name: postgres-password
+                                    key: POSTGRES_PASSWORD
+                            - name: URL
+                              value: postgres://admin:$(PASSWORD)@postgres-svc:5432/project
+                          volumeMounts:
+                            - name: secret-volume
+                              readOnly: true
+                              mountPath: /etc/secret-volume
+                    restartPolicy: OnFailure
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age13w2jxmsuwhq5ppnn4fef48jsqvd00nvlgy30xv60x2nnsl6pk3rsdmcfwj
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSByNXV4L2dGaW1OTXBmTzBN
+            MHNMOG1ZQkx1eFo2cTcyT0NKZDJTVkUzTlIwCitoYmRwZUVLR0tsOC9tV2xTRXdU
+            UHBQbGYxQkpwRXAxVHlJZTZpQXpvbGcKLS0tIGpjQU9ybitWMEozeWpkZWp5YWh2
+            NUxOZXNRaGd4MnpUUzNtbnBPK2RPNmsKbyXdG/X3BdNWrK1K4mmiDlMEZdn1t3K9
+            vhWHWRUYNvgMNy09Jq/J6EB+ulLkB5tiaZwuE+ywsJvJEpV5Y/d4XA==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2024-08-06T11:50:08Z"
+    mac: ENC[AES256_GCM,data:j3ebViNj/mcGRyDP66Ir8R5B5Dd0gPmr/mDHYvm9P+qlaba2en4hlnwX/4sSinPyKRk3yw4cu2lgCbDzMkUPFVIjE5jQLnkAjyMEX38k2HSlU6OAqL/2JnHarlaFpN5uck54SSCkuXHScGHlkNMk0K31qUQDf9/748D9GnZ6ZKs=,iv:+rjRqHZr/cfWnwpuMJrw54tqfBV2pf316claV8d0I4Y=,tag:FWsRRpH0i+YCrWyGvGkglw==,type:str]
+    pgp: []
+    encrypted_regex: ^(data)$
+    version: 3.9.0

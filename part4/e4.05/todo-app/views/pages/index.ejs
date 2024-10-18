@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <style>
+            .done {
+                text-decoration: line-through;
+            }
+        </style>
+        <script>
+            async function markDone(id) {
+                await fetch(`/${id}`, {
+                    method: 'PUT',
+                });
+                location.reload();
+            }
+        </script>
+    </head>
+    <body>
+        <h1>TODO app</h1>
+        <img src="data:image/jpeg;base64,<%= image %>" alt="Image">
+        <form id="todoForm" action="/" method="POST">
+            <input type="text" id="todoInput" name="todoInput" maxlength="140">
+            <input type="submit" value="Create TODO">
+        </form>
+        <ul>
+            <% for (var i = 0; i < todos.length ; i++) { %>
+                <li class="<%= todos[i].done ? 'done' : '' %>">
+                    <%= todos[i].todo %>
+                    <% if (!todos[i].done) { %>
+                        <button onclick="markDone(<%= todos[i].id %>)">Mark Done</button>
+                    <% } %>
+                </li>
+            <% } %>
+        </ul>
+    </body>
+</html>

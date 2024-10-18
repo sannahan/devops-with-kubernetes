@@ -1,0 +1,72 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: project-dep
+spec:
+  replicas: 2
+  strategy:
+    canary:
+      steps:
+        - setWeight: 50
+        - analysis:
+            templates:
+              - templateName: cpu-usage
+  selector:
+    matchLabels:
+      app: project
+  template:
+    metadata:
+      labels:
+        app: project
+    spec:
+      volumes:
+        - name: image-volume
+          persistentVolumeClaim:
+            claimName: image-claim
+      containers:
+        - name: todo-app
+          image: APP-PROJECT/IMAGE
+          env:
+          - name: PORT
+            value: "8082"
+          - name: BACKEND_URL
+            value: "http://todo-backend-svc:2346/todos"
+          volumeMounts:
+          - name: image-volume
+            mountPath: /usr/src/app/files
+          resources:
+            limits:
+              cpu: "100m"
+              memory: "50Mi"
+        - name: todo-backend
+          image: BACKEND-PROJECT/IMAGE
+          env:
+          - name: PORT
+            value: "8085"
+          - name: PGHOST
+            value: postgres-svc
+          - name: PGDATABASE
+            value: project
+          - name: PGUSER
+            value: admin
+          - name: PGPASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres-password
+                key: POSTGRES_PASSWORD
+          readinessProbe:
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            httpGet:
+              path: /healthz
+              port: 8085
+          livenessProbe:
+            initialDelaySeconds: 20
+            periodSeconds: 5
+            httpGet:
+              path: /healthz
+              port: 8085
+          resources:
+            limits:
+              cpu: "100m"
+              memory: "50Mi"

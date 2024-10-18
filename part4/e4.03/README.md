@@ -1,0 +1,1 @@
+Query result is 2 instead of 3 because I did not see how to account for replicas in kube_pod_info (one of the StatefulSet pods has two replicas) 

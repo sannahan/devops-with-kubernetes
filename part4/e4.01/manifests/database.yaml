@@ -1,0 +1,88 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: log-output
+  name: postgres-svc
+  labels:
+    app: postgres
+spec:
+  ports:
+    - port: 5432
+      name: web
+  clusterIP: None
+  selector:
+    app: postgres
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: log-output
+  name: postgres-config
+  labels:
+    app: postgres
+data:
+  POSTGRES_DB: pingpong
+  POSTGRES_USER: admin
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  namespace: log-output
+  name: postgres-ss
+spec:
+  serviceName: postgres
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:13.0
+          ports:
+            - name: postgres
+              containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: postgres-config
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-password
+                  key: POSTGRES_PASSWORD
+            - name: POSTGRES_LOGGING_COLLECTOR
+              value: "on"
+            - name: POSTGRES_LOG_DESTINATION
+              value: "stderr"
+            - name: POSTGRES_LOG_DIRECTORY
+              value: "log"
+            - name: POSTGRES_LOG_FILENAME
+              value: "postgresql-%Y-%m-%d_%H%M%S.log"
+            - name: POSTGRES_LOG_TRUNCATE_ON_ROTATION
+              value: "on"
+            - name: POSTGRES_LOG_ROTATION_AGE
+              value: "1d"
+            - name: POSTGRES_LOG_ROTATION_SIZE
+              value: "10MB"
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+              subPath: postgres
+          resources:
+            limits:
+              cpu: "100m"
+              memory: "200Mi"
+  volumeClaimTemplates:
+    - metadata:
+        namespace: log-output
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 100Mi
