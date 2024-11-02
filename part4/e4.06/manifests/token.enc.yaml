@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: telegram-token
+data:
+    TOKEN: ENC[AES256_GCM,data:TZfyvzb3eAiB+FIPjlLuspfMeHJGU1YXFepUFvanpwzWp3CRkN9/8A9uFbrkeHVf6vGnZ0XPZe4QObPuvlI4Bw==,iv:yKVpjVeh25uPUN3E76XCrHPNXZn5q0uI+SmLOx5M54c=,tag:Vs8jasv9zKT2kiLBdEIR0Q==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age18mxdxqaa88fdm2ljnr8z6uz3cecd38704xe9umyqh2zxtyx9wuws60wfyw
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBlUXI0dUFjT2N2QjVGOXEv
+            czgyelRWMFZiaEt5cVB6T0h6bVM5dlFESjJNCkF0aEIxbTkxYU5UR3g3L2RDTVZW
+            TDlNMzR0akdjbk1DRHVURy8xTld4b28KLS0tIE1lOGZJODZ3YlZZOHNkNVpZUmxV
+            TG1TZ2RURWhjM0xtclFtb1NZU0JPYkEKuelmLNtM4/mXxDDjS4ZMfVHMMrwTEZuR
+            yvGpcNcLseuEnViZnCSaKCXQzMB2wS8z7SLQvtwrwbu43Z4EmofQoA==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2024-11-02T15:04:59Z"
+    mac: ENC[AES256_GCM,data:ATV51s3ziEDeq5+Q+ELtMotcHqduEE+HdlPonXWZwZVpBluZeqeeUxHDpaLEogrQXgTZFXDcQ4ibKEs7NCairJQ6FliN9NV+eTkD3M6fZAzV7s+3WVjyfzWMrJHyFin0Ym+ZfF3pv2Pdoa5IyF7Il+t6knT2pFJRBOhFbxAh2/Q=,iv:hsAiyXMwKVT+Y47dYHXH9xEdOFYOPr+CntkWvWhCOuM=,tag:6jkBRcL5HtFwSCg0XIWuCA==,type:str]
+    pgp: []
+    encrypted_regex: ^(data)$
+    version: 3.9.0

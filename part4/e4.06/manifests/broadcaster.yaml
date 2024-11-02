@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: broadcaster-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: broadcaster
+  template:
+    metadata:
+      labels:
+        app: broadcaster
+    spec:
+      containers:
+        - name: broadcaster
+          image: sannahan/todo-broadcaster:4.06.01
+          env:
+            - name: NATS_URL
+              value: "nats://my-nats:4222"
+            - name: CHAT_ID
+              value: "-4599677827"
+            - name: TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: telegram-token
+                  key: TOKEN
