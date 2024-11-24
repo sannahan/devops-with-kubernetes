@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: log-output
+  name: log-output-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: log-output
+  template:
+    metadata:
+      labels:
+        app: log-output
+    spec:
+      volumes:
+        - name: config-volume
+          configMap:
+            name: example-configmap
+      containers:
+        - name: log-output
+          image: LOG-OUTPUT/IMAGE
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/config
+          resources:
+            limits:
+              cpu: "50m"
+              memory: "100Mi"
+          readinessProbe:
+            initialDelaySeconds: 15
+            periodSeconds: 5
+            httpGet:
+              path: /healthz
+              port: 3000

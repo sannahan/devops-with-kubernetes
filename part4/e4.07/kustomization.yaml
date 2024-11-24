@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - manifests/configmap.yaml
+  - manifests/database.yaml
+  - manifests/ingress.yaml
+  - manifests/log-output-deployment.yaml
+  - manifests/log-output-service.yaml
+  - manifests/pingpong-deployment.yaml
+  - manifests/pingpong-service.yaml
+images:
+  - name: LOG-OUTPUT/IMAGE
+    newName: sannahan/log-output:e4.01.06
+  - name: PINGPONG/IMAGE
+    newName: sannahan/pingpong:e4.01.02

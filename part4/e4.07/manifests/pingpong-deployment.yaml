@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: log-output
+  name: pingpong-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pingpong
+  template:
+    metadata:
+      labels:
+        app: pingpong
+    spec:
+      containers:
+        - name: pingpong
+          image: PINGPONG/IMAGE
+          env:
+          - name: PGHOST
+            value: postgres-svc
+          - name: PGDATABASE
+            value: pingpong
+          - name: PGUSER
+            value: admin
+          - name: PGPASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres-password
+                key: POSTGRES_PASSWORD
+          resources:
+            limits:
+              cpu: "50m"
+              memory: "100Mi"
+          readinessProbe:
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            httpGet:
+              path: /healthz
+              port: 3001
+
