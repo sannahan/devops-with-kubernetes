@@ -1,0 +1,12 @@
+Platform comparison: arguments for why OpenShift is better than Rancher
+
+- both OpenShift and Rancher offer features such as an UI, a CLI and authentication and access control
+added on top of Kubernetes. Furthermore, both offer hybrid and multi-cloud strategies and
+thus being able to manage many clusters centrally
+- OpenShift is built on Red Hat's Linux environment (RHEL). Some favor RHEL because of its reliability, wide adoption
+and security (SELinux and security certifications). Furthermore, OKD, the upstream project of OpenShift, is an open-source version of OpenShift
+that doesn't have all the benefits of a subscription (like validated middleware and support), but is free.
+Rancher works with any Linux distribution, and RKE (Rancher Kubernetes Engine) runs within Docker containers.
+Use of Rancher is free and use of OpenShift requires a subscription, but OpenShift might be better suited for enterprise applications
+because of its security features
+- OpenShift's major asset is the S2I, source-to-image toolkit for building container images out of source code
